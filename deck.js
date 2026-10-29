@@ -7,9 +7,8 @@
   const overview = document.querySelector(".overview");
   let current = 0;
 
-  // Signature BTL sur chaque slide
-  const sign = document.querySelector("#btl-sign").content;
-  slides.forEach((slide) => { if (!slide.querySelector(".slide-sign")) slide.append(sign.cloneNode(true)); });
+  // Commandes visibles quand la souris bouge, discrètes sinon
+  let idle; document.addEventListener("pointermove", () => { document.body.classList.add("show-controls"); clearTimeout(idle); idle = setTimeout(() => document.body.classList.remove("show-controls"), 2200); });
 
   const pad = (n) => String(n).padStart(2, "0");
   const go = (index, push = true) => {
@@ -19,7 +18,7 @@
     counts.forEach((el) => { el.textContent = `${pad(current + 1)} / ${pad(slides.length)}`; });
     const note = slides[current].querySelector("aside.note");
     notes.innerHTML = note ? note.innerHTML : "<p>Pas de note pour cette slide.</p>";
-    overview.querySelectorAll("button").forEach((b, i) => b.classList.toggle("is-current", i === current));
+    overview.querySelectorAll("li:not(.part) button").forEach((b, i) => b.classList.toggle("is-current", i === current));
     if (push) history.replaceState(null, "", `#${current + 1}`);
   };
   const next = () => go(current + 1); const prev = () => go(current - 1);
@@ -29,7 +28,7 @@
 
   // Sommaire
   const list = overview.querySelector("ol");
-  slides.forEach((slide, i) => { const li = document.createElement("li"); li.innerHTML = `<button type="button"><small>${pad(i + 1)}</small>${slide.dataset.title ?? ""}</button>`; li.firstChild.addEventListener("click", () => { go(i); overview.classList.remove("is-open"); }); list.append(li); });
+  slides.forEach((slide, i) => { if (slide.dataset.part) { const head = document.createElement("li"); head.className = "part"; head.textContent = slide.dataset.part; list.append(head); } const li = document.createElement("li"); li.innerHTML = `<button type="button"><small>${pad(i + 1)}</small>${slide.dataset.title ?? ""}</button>`; li.firstChild.addEventListener("click", () => { go(i); overview.classList.remove("is-open"); }); list.append(li); });
 
   document.addEventListener("keydown", (e) => {
     if (e.target.closest("input")) return;
