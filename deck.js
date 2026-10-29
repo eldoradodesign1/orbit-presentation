@@ -1,102 +1,46 @@
-// Navigation de la présentation : clavier, glisser, lien direct (#n), notes (N), sommaire (O), plein écran (F).
-(() => {
-  const slides = [...document.querySelectorAll(".slide")];
-  const bar = document.querySelector(".progress i");
-  const counts = document.querySelectorAll("[data-count]");
-  const notes = document.querySelector(".notes");
-  const overview = document.querySelector(".overview");
-  let current = 0;
-
-  // Signature BTL sur chaque slide
-  const sign = document.querySelector("#btl-sign").content;
-  slides.forEach((slide) => { if (!slide.querySelector(".slide-sign")) slide.append(sign.cloneNode(true)); });
-
-  const pad = (n) => String(n).padStart(2, "0");
-  const go = (index, push = true) => {
-    current = Math.max(0, Math.min(slides.length - 1, index));
-    slides.forEach((slide, i) => { slide.classList.toggle("is-active", i === current); slide.classList.toggle("is-past", i < current); });
-    bar.style.width = `${((current + 1) / slides.length) * 100}%`;
-    counts.forEach((el) => { el.textContent = `${pad(current + 1)} / ${pad(slides.length)}`; });
-    const note = slides[current].querySelector("aside.note");
-    notes.innerHTML = note ? note.innerHTML : "<p>Pas de note pour cette slide.</p>";
-    overview.querySelectorAll("button").forEach((b, i) => b.classList.toggle("is-current", i === current));
-    if (push) history.replaceState(null, "", `#${current + 1}`);
-  };
-  const next = () => go(current + 1); const prev = () => go(current - 1);
-  const toggleNotes = () => { notes.classList.toggle("is-open"); document.querySelector("[data-act=notes]").classList.toggle("is-on", notes.classList.contains("is-open")); };
-  const toggleOverview = () => overview.classList.toggle("is-open");
-  const fullscreen = () => (document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen?.());
-
-  // Sommaire
-  const list = overview.querySelector("ol");
-  slides.forEach((slide, i) => { const li = document.createElement("li"); li.innerHTML = `<button type="button"><small>${pad(i + 1)}</small>${slide.dataset.title ?? ""}</button>`; li.firstChild.addEventListener("click", () => { go(i); overview.classList.remove("is-open"); }); list.append(li); });
-
-  document.addEventListener("keydown", (e) => {
-    if (e.target.closest("input")) return;
-    if (["ArrowRight", "PageDown", " ", "Enter"].includes(e.key)) { e.preventDefault(); next(); }
-    else if (["ArrowLeft", "PageUp", "Backspace"].includes(e.key)) { e.preventDefault(); prev(); }
-    else if (e.key === "Home") go(0); else if (e.key === "End") go(slides.length - 1);
-    else if (e.key.toLowerCase() === "n") toggleNotes();
-    else if (e.key.toLowerCase() === "o") toggleOverview();
-    else if (e.key.toLowerCase() === "f") fullscreen();
-    else if (e.key === "Escape") { notes.classList.remove("is-open"); overview.classList.remove("is-open"); }
-  });
-  let x0 = null; let y0 = null;
-  document.addEventListener("touchstart", (e) => { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
-  document.addEventListener("touchend", (e) => { if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0; const dy = e.changedTouches[0].clientY - y0; if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.4) (dx < 0 ? next : prev)(); x0 = null; });
-  document.querySelectorAll("[data-act]").forEach((b) => b.addEventListener("click", () => ({ prev, next, notes: toggleNotes, overview: toggleOverview, full: fullscreen })[b.dataset.act]()));
-  window.addEventListener("hashchange", () => go(Number(location.hash.slice(1)) - 1 || 0, false));
-  go(Number(location.hash.slice(1)) - 1 || 0, false);
-
-  // ── Modèle économique (même calcul pour le graphique et le calculateur) ──
-  // Mois 0 : développement. Pilote : on ne facture pas encore. Ensuite : n campagnes / mois facturées.
-  const model = ({ perMonth, pilot, iaShare, price = 500, ia = 200, setup = 100, hosting = 50, dev = 500, months = 12 }) => {
-    let cum = -dev; const rows = [];
-    for (let m = 1; m <= months; m++) {
-      const billing = m > pilot;
-      const revenue = billing ? perMonth * price + Math.round(perMonth * iaShare) * ia : 0;
-      const cost = hosting + (billing ? perMonth * setup : 0);
-      cum += revenue - cost; rows.push({ m, revenue, cost, net: revenue - cost, cum });
-    }
-    const even = rows.find((r) => r.cum >= 0)?.m ?? null;
-    return { rows, even, total: rows.at(-1).cum, revenue: rows.reduce((s, r) => s + r.revenue, 0) };
-  };
-  const money = (v) => `${v < 0 ? "−" : ""}${Math.abs(Math.round(v)).toLocaleString("fr-FR")} $`;
-  const draw = (svg, result) => {
-    const W = 760; const H = 300; const top = 20; const base = 230; const max = Math.max(...result.rows.map((r) => Math.abs(r.cum)), ...result.rows.map((r) => r.revenue), 1);
-    const y = (v) => base - (v / max) * (base - top) * (v >= 0 ? 1 : .35);
-    const step = W / result.rows.length; const bw = step * .42;
-    let out = `<line x1="0" x2="${W}" y1="${base}" y2="${base}" stroke="rgb(190 215 255 / .2)"/>`;
-    result.rows.forEach((r, i) => {
-      const x = i * step + step / 2;
-      out += `<rect x="${x - bw / 2}" y="${Math.min(y(r.revenue), base)}" width="${bw}" height="${Math.abs(base - y(r.revenue)) || 1}" rx="5" fill="rgb(112 232 225 / .75)"><title>Mois ${r.m} : ${money(r.revenue)} facturés</title></rect>`;
-      out += `<text x="${x}" y="${base + 22}" text-anchor="middle" font-size="12" fill="rgb(150 168 196)">M${r.m}</text>`;
-    });
-    const pts = result.rows.map((r, i) => `${i * step + step / 2},${y(r.cum)}`).join(" ");
-    out += `<polyline points="${pts}" fill="none" stroke="rgb(151 128 255)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>`;
-    result.rows.forEach((r, i) => { out += `<circle cx="${i * step + step / 2}" cy="${y(r.cum)}" r="${r.m === result.even ? 7 : 4}" fill="${r.m === result.even ? "rgb(255 255 255)" : "rgb(151 128 255)"}"/>`; });
-    if (result.even) { const i = result.even - 1; out += `<text x="${i * step + step / 2}" y="${y(result.rows[i].cum) - 16}" text-anchor="middle" font-size="13" font-weight="600" fill="#fff">Point mort</text>`; }
-    const last = result.rows.at(-1); out += `<text x="${W - 4}" y="${y(last.cum) - 14}" text-anchor="end" font-size="15" font-weight="700" fill="rgb(151 128 255)">${money(last.cum)}</text>`;
-    svg.setAttribute("viewBox", `0 0 ${W} ${H - 30}`); svg.innerHTML = out;
-  };
-  const roi = document.querySelector("#roi-chart");
-  if (roi) { const r = model({ perMonth: 2, pilot: 2, iaShare: .5 }); draw(roi, r); document.querySelector("#roi-even").textContent = `mois ${r.even}`; document.querySelector("#roi-total").textContent = money(r.total); }
-
-  const calc = document.querySelector("#calc");
-  if (calc) {
-    const inputs = [...calc.querySelectorAll("input")];
-    const update = () => {
-      const v = Object.fromEntries(inputs.map((i) => [i.name, Number(i.value)]));
-      calc.querySelector("[data-v=perMonth]").textContent = v.perMonth;
-      calc.querySelector("[data-v=pilot]").textContent = `${v.pilot} mois`;
-      calc.querySelector("[data-v=iaShare]").textContent = `${v.iaShare} %`;
-      calc.querySelector("[data-v=price]").textContent = money(v.price);
-      const r = model({ perMonth: v.perMonth, pilot: v.pilot, iaShare: v.iaShare / 100, price: v.price });
-      calc.querySelector("[data-k=even]").textContent = r.even ? `mois ${r.even}` : "> 12 mois";
-      calc.querySelector("[data-k=revenue]").textContent = money(r.revenue);
-      calc.querySelector("[data-k=total]").textContent = money(r.total);
-      draw(calc.querySelector("svg"), r);
-    };
-    inputs.forEach((i) => i.addEventListener("input", update)); update();
-  }
+(()=>{
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],pad=n=>String(n).padStart(2,'0'),money=v=>new Intl.NumberFormat('fr-FR',{maximumFractionDigits:0}).format(Math.round(v))+' $',monitor=new URLSearchParams(location.search).has('monitor');
+let current=0,theme='aurore',channel=null,session='',presenter=null,elapsed=0,running=false,timerStarted=0,chartSpring=null;
+const slides=$$('.slide'),states=[],{Spring}=OrbitMotion,reduce=()=>document.documentElement.dataset.reduce==='true'||matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(monitor)document.body.classList.add('monitor');
+try{theme=localStorage.getItem('orbit-deck-theme')||'aurore';document.documentElement.dataset.reduce=localStorage.getItem('orbit-deck-reduce')==='true'?'true':'false';session=sessionStorage.getItem('orbit-presentation-session')||(typeof crypto.randomUUID==='function'?crypto.randomUUID():String(Date.now())+'-'+Math.random().toString(36).slice(2));sessionStorage.setItem('orbit-presentation-session',session)}catch{session=String(Date.now())}
+function themeSet(id){if(!['aurore','nebuleuse','pulsar','blackhole','starfly','aube'].includes(id))return;theme=id;document.documentElement.dataset.ambiance=id;document.documentElement.style.colorScheme=['starfly','aube'].includes(id)?'light':'dark';$$('[data-theme]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.theme===id));try{localStorage.setItem('orbit-deck-theme',id)}catch{}const imgs={aurore:['02-accueil-privilege.jpg','Aurore · Vodacom Privilège'],nebuleuse:['09-mikili-nebuleuse.jpg','Nébuleuse · M-Pesa Mikili'],starfly:['10-starfly.jpg','Starfly · Vodacom Privilège'],aube:['11-youth-aube.jpg','Aube · Youth F2F'],pulsar:['08-accueil-merchant.jpg','Campagne Merchant · capture réelle'],blackhole:['02-accueil-privilege.jpg','Vodacom Privilège · capture réelle']};const [src,label]=imgs[id];const button=$('.theme-main .capture');button.dataset.zoom=src;button.querySelector('img').src='images/app/'+src;$('.theme-label').textContent=label;if(chartSpring)updateCalc(false)}
+themeSet(theme);$('#reduce-motion').checked=reduce();$('#reduce-motion').onchange=e=>{document.documentElement.dataset.reduce=String(e.target.checked);try{localStorage.setItem('orbit-deck-reduce',String(e.target.checked))}catch{}if(e.target.checked){states.forEach(s=>s.snap(s.target));ring.snap(ring.target)}};
+const ring=new Spring({x:0,y:0,scale:1,alpha:.15},v=>{const el=$('#sky-ring');el.style.transform=`translate3d(${v.x}px,${v.y}px,0) scale(${v.scale})`;el.style.opacity=v.alpha},{response:.6});
+slides.forEach((el,i)=>{const s=new Spring({x:0,opacity:0},v=>{el.style.transform=`translate3d(${v.x}px,0,0)`;el.style.opacity=Math.max(0,Math.min(1,v.opacity));el.style.visibility=i===current||v.opacity>.005?'visible':'hidden'});states.push(s)});
+let builds=[];
+function go(index,initial=false){index=Number.isFinite(+index)?Math.max(0,Math.min(slides.length-1,Math.floor(+index))):0;const old=current,dir=index>=old?1:-1;if(old===index&&!initial)return;current=index;slides.forEach((el,i)=>{el.inert=i!==current;el.setAttribute('aria-hidden',String(i!==current));el.classList.toggle('is-current',i===current);if(i===current){if(initial)states[i].snap({x:0,opacity:1});else{if(states[i].value.opacity<.01)states[i].snap({x:dir*65,opacity:0});states[i].to({x:0,opacity:1})}}else if(states[i].value.opacity>.001||states[i].target.opacity!==0)states[i].to({x:-dir*65,opacity:0});else el.style.visibility='hidden'});builds.forEach(a=>a.cancel());builds=[];if(!initial&&!reduce()){const items=slides[current].querySelectorAll('.impact,.floating-file,.decision-item,.launch-step,.bubble,.investment-side>div');items.forEach((el,i)=>builds.push(el.animate([{opacity:.2,translate:'0 12px'},{opacity:1,translate:'0 0'}],{duration:500,delay:i*65,easing:'cubic-bezier(.22,1,.36,1)',fill:'backwards'})))}const s=ORBIT_SLIDES[current];ring.to({x:s.type==='cover'?0:s.act===2?-120:s.act===4?80:40,y:s.type==='cover'?0:s.act===2?50:0,scale:s.type==='cover'?1.1:s.act===4?.8:.95,alpha:s.type==='cover'?.05:s.act===2?.08:s.type==='close'?.03:.12});$('.progress i').style.transform=`scaleX(${(current+1)/slides.length})`;$('#slide-counter').innerHTML=`${pad(current+1)} <span>/ 24</span>`;$('#actlabel').textContent=ORBIT_ACTS[s.act][0];$$('[data-act]').forEach(b=>{if(+b.dataset.act===s.act)b.setAttribute('aria-current','step');else b.removeAttribute('aria-current')});$$('[data-go]').forEach(b=>b.setAttribute('aria-current',String(+b.dataset.go===current)));$('[data-action=prev]').disabled=current===0;$('[data-action=next]').disabled=current===23;$('#announcement').textContent=`Slide ${current+1} sur 24. ${s.title}`;if(!monitor)history.replaceState(null,'','#'+(current+1));slides[current].scrollTop=0;broadcast();if(s.type==='roi')updateCalc(false)}
+function show(id){const d=$('#'+id);if(!d)return;$$('dialog[open]').forEach(x=>x.close());d.showModal();if(!reduce())d.animate([{opacity:.3,scale:'.97'},{opacity:1,scale:'1'}],{duration:220,easing:'cubic-bezier(.22,1,.36,1)'})}
+function toast(text){$('#toast').textContent=text;$('#toast').classList.add('visible');clearTimeout(toast.t);toast.t=setTimeout(()=>$('#toast').classList.remove('visible'),5000)}
+function timeNow(){return elapsed+(running?Math.floor((Date.now()-timerStarted)/1000):0)}
+function toggleTimer(){if(running){elapsed=timeNow();running=false}else{timerStarted=Date.now();running=true}broadcast()}
+function broadcast(){if(channel&&!monitor)channel.postMessage({type:'state',current,slide:ORBIT_SLIDES[current],next:ORBIT_SLIDES[current+1]?.title||'Questions et réponses',elapsed:timeNow(),running,total:52,before:ORBIT_SLIDES.slice(0,current).reduce((a,s)=>a+s.time,0),theme,params:calcParams})}
+function openPresenter(){presenter=window.open('presenter.html?session='+encodeURIComponent(session)+'#'+(current+1),'orbit-presenter-'+session,'width=1280,height=820');if(!presenter)toast('La fenêtre présentateur a été bloquée. Autorise les fenêtres de ce site puis appuie sur P.');else{presenter.focus();broadcast()}}
+if(!monitor&&typeof BroadcastChannel!=='undefined'){channel=new BroadcastChannel('orbit-presenter-'+session);channel.onmessage=e=>{const d=e.data||{};if(d.type==='ready')broadcast();if(d.type==='command'){if(d.action==='next')go(current+1);if(d.action==='prev')go(current-1);if(d.action==='timer')toggleTimer();if(d.action==='reset'){elapsed=0;running=false;broadcast()}if(d.action==='goto')go(d.index)}};setInterval(broadcast,1000)}
+if(monitor)window.addEventListener('message',e=>{if(e.source!==parent)return;if(e.data?.type==='orbit-monitor'){go(e.data.current);themeSet(e.data.theme);if(e.data.params){Object.assign(calcParams,e.data.params);$$('#simulator input').forEach(input=>{input.value=calcParams[input.name]});$$('[data-pilot-rate]').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.pilotRate===calcParams.pilotRate)));updateCalc(false)}}});
+const actions={next:()=>go(current+1),prev:()=>go(current-1),overview:()=>show('overview'),appearance:()=>show('appearance'),objections:()=>show('objections'),advanced:()=>show('advanced'),presenter:openPresenter,full:()=>{const p=document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen?.();p?.catch(()=>toast('Le plein écran n’est pas disponible dans cette fenêtre.'))},table:showTable};
+$$('[data-action]').forEach(b=>b.onclick=()=>actions[b.dataset.action]?.());$$('[data-close]').forEach(b=>b.onclick=()=>b.closest('dialog').close());$$('[data-go]').forEach(b=>b.onclick=()=>{go(+b.dataset.go);$('#overview').close()});$$('[data-act]').forEach(b=>b.onclick=()=>go(ORBIT_SLIDES.findIndex(s=>s.act===+b.dataset.act)));$$('[data-theme]').forEach(b=>b.onclick=()=>themeSet(b.dataset.theme));
+$$('[data-zoom]').forEach(b=>b.onclick=()=>{$('#zoom img').src='images/app/'+b.dataset.zoom;show('zoom')});
+document.addEventListener('keydown',e=>{if(e.target.closest('input,textarea,select,summary,[contenteditable=true]')||$('dialog[open]'))return;const k=e.key.toLowerCase();if(['ArrowRight','PageDown'].includes(e.key)||e.key===' '&&e.target===document.body){e.preventDefault();go(current+1)}else if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();go(current-1)}else if(e.key==='Home'){e.preventDefault();go(0)}else if(e.key==='End'){e.preventDefault();go(23)}else if(k==='p'||k==='n')openPresenter();else if(k==='o'||k==='s')show('overview');else if(k==='q')show('objections');else if(k==='f')actions.full()});window.addEventListener('hashchange',()=>go(Number(location.hash.slice(1))-1));
+// Glissement horizontal : le mouvement suit le doigt. Le scroll vertical reste libre.
+let gesture=null;$('#deck').addEventListener('pointerdown',e=>{if(e.pointerType==='mouse'||e.target.closest('button,input,a,summary,dialog'))return;gesture={x:e.clientX,y:e.clientY,lastX:e.clientX,t:performance.now(),v:0,active:false}});$('#deck').addEventListener('pointermove',e=>{if(!gesture)return;const dx=e.clientX-gesture.x,dy=e.clientY-gesture.y,now=performance.now();if(!gesture.active&&Math.abs(dy)>14&&Math.abs(dy)>Math.abs(dx)){gesture=null;return}if(!gesture.active&&Math.abs(dx)>12&&Math.abs(dx)>Math.abs(dy)*1.4){gesture.active=true;$('#deck').setPointerCapture(e.pointerId)}if(gesture.active){gesture.v=(e.clientX-gesture.lastX)/Math.max(1,now-gesture.t)*1000;states[current].snap({x:dx*.6,opacity:1})}gesture.lastX=e.clientX;gesture.t=now});function endGesture(e){if(!gesture)return;if(gesture.active){const dx=e.clientX-gesture.x,projected=dx+gesture.v/1000*.998/(1-.998);states[current].velocity.x=gesture.v*.6;if(Math.abs(projected)>80){const next=current+(projected<0?1:-1);if(next!==current&&next>=0&&next<=23)go(next);else states[current].to({x:0,opacity:1})}else states[current].to({x:0,opacity:1})}gesture=null}$('#deck').addEventListener('pointerup',endGesture);$('#deck').addEventListener('pointercancel',()=>{if(gesture?.active)states[current].to({x:0,opacity:1});gesture=null});
+// Un signal de campagne fictif, manipulable.
+$$('[data-signal]').forEach(b=>b.onclick=()=>{const i=+b.dataset.signal;$('#signal-value').textContent=[30,18,12][i];$('#signal-day').textContent=['Lundi','Mardi','Mercredi'][i];$('#signal-delta').textContent=['Référence','−40 %','−60 %'][i];$$('[data-signal]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)))});
+$$('[data-role]').forEach(b=>b.onclick=()=>{b.setAttribute('aria-pressed',String(b.getAttribute('aria-pressed')!=='true'));const n=$$('[data-role][aria-pressed=true]').length;$('.adoption-ring .engaged').style.strokeDashoffset=100-n*25;$('#adoption-state').textContent=n===4?'Toute l’agence':n===0?'Une vue vide':`${n} rôles sur 4`;$('.adoption-core>span').textContent=n===4?'Une donnée exploitable':'Une chaîne incomplète'});
+// Simulation : mêmes paramètres pour le graphique, les KPI et le détail mensuel.
+const calcParams={...OrbitModel.defaults};const fields=[['dev','Développement initial ($)',500],['setup','Adaptation après la première ($)',100],['hosting','Hébergement / mois ($)',50],['support','Réserve support / mois ($)',50],['iaCost','Coût IA / campagne équipée ($)',20]];
+$('.advanced-fields').innerHTML=fields.map(([k,label,value])=>`<label>${label}<input type="number" name="${k}" value="${value}" min="0" max="100000" step="1" aria-label="${label}"></label>`).join('');
+$$('#simulator input').forEach(input=>input.oninput=()=>{calcParams[input.name]=Math.max(0,Number(input.value));updateCalc(true)});$$('.advanced-fields input').forEach(input=>input.oninput=()=>{calcParams[input.name]=Math.max(0,Math.min(100000,Number(input.value)||0));updateCalc(true)});$$('[data-pilot-rate]').forEach(b=>b.onclick=()=>{calcParams.pilotRate=+b.dataset.pilotRate;$$('[data-pilot-rate]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));updateCalc(true)});
+let latestResult=null;
+function updateCalc(animate=true){const r=OrbitModel.model(calcParams);latestResult=r;$$('#simulator input').forEach(input=>{const v=Number(input.value);input.style.setProperty('--fill',((v-input.min)/(input.max-input.min)*100)+'%');const out=$('[data-output='+input.name+']');out.textContent=['price','iaPrice'].includes(input.name)?money(v):input.name==='iaShare'?v+' %':input.name==='pilot'?v+' mois':v});$('[data-result=even]').textContent=r.even?'Mois '+r.even:'> 12 mois';$('[data-result=revenue]').textContent=money(r.revenue);$('[data-result=net]').textContent=money(r.net);$('[data-result=cost]').textContent='Coûts : '+money(r.cost);$('#cost-summary').textContent=`Hébergement ${money(calcParams.hosting)}/mois, réserve support ${money(calcParams.support)}/mois, IA ${money(calcParams.iaCost)}/campagne équipée.`;drawChart(r,animate);if(!monitor)broadcast()}
+function drawChart(result,animate){const rows=result.rows,W=760,H=350,left=60,right=735,top=32,bottom=285,lo=Math.min(0,...rows.map(r=>r.cumulative)),hi=Math.max(100,...rows.map(r=>Math.max(r.cumulative,r.revenue))),min=lo<0?lo*1.18:-hi*.04,max=hi*1.15,x=m=>left+(right-left)*m/12,y=v=>bottom-(v-min)/(max-min)*(bottom-top);const values={zero:y(0)};rows.forEach((r,i)=>{values['line'+i]=y(r.cumulative);values['bar'+i]=y(r.revenue)});
+const render=v=>{let svg=`<defs><linearGradient id="roi-area" x1="0" y1="0" x2="0" y2="1"><stop stop-color="rgb(var(--o-acc))" stop-opacity=".12"/><stop offset="1" stop-color="rgb(var(--o-acc))" stop-opacity="0"/></linearGradient></defs>`;
+for(let k=0;k<4;k++){const value=min+(max-min)*k/3,yy=y(value);svg+=`<line x1="${left}" x2="${right}" y1="${yy}" y2="${yy}" stroke="rgb(var(--o-glass)/.04)"/><text x="${left-12}" y="${yy+4}" text-anchor="end">${new Intl.NumberFormat('fr-FR',{maximumFractionDigits:1}).format(value/1000)} k$</text>`}
+svg+=`<line class="zero" x1="${left}" x2="${right}" y1="${v.zero}" y2="${v.zero}"/>`;
+rows.slice(1).forEach((r,i)=>{const xx=x(r.m),yy=Math.min(v['bar'+r.m],v.zero),height=Math.abs(v.zero-v['bar'+r.m]);svg+=`<rect x="${xx-12}" y="${yy}" width="24" height="${Math.max(0,height)}" rx="4" fill="rgb(var(--o-blue)/.25)" stroke="none"><title>Mois ${r.m} : facturé ${money(r.revenue)}, coûts ${money(r.cost)}</title></rect><text x="${xx}" y="${bottom+25}" text-anchor="middle">${r.m}</text>`});
+const d=rows.map((r,i)=>(i?'L':'M')+x(r.m)+','+v['line'+i]).join(' ');svg+=`<path d="${d} L${x(12)},${v.zero} L${x(0)},${v.zero}Z" fill="url(#roi-area)" stroke="none"/><path d="${d}" fill="none" stroke="rgb(var(--o-acc))" stroke-width="2.5"/>`;
+rows.forEach((r,i)=>{svg+=`<circle cx="${x(r.m)}" cy="${v['line'+i]}" r="${r.m===result.even?5:3}" fill="${r.m===result.even?'rgb(var(--o-ink))':'rgb(var(--o-acc))'}" stroke="rgb(var(--o-deep1))" stroke-width="2"><title>M${r.m} : solde cumulé ${money(r.cumulative)}</title></circle>`});if(result.even){const ev=rows[result.even],xx=x(ev.m),yy=v['line'+ev.m];svg+=`<text class="point-mort" x="${xx}" y="${Math.max(16,yy-18)}" text-anchor="middle">Équilibre</text>`}svg+=`<text class="chart-total" x="${right}" y="${Math.max(18,v.line12-16)}" text-anchor="end">${money(result.net)}</text><text x="${left}" y="${bottom+25}" text-anchor="middle">0</text><text x="${right}" y="${bottom+48}" text-anchor="end">Mois</text>`;$('#roi-chart').innerHTML=svg;$('#roi-chart').setAttribute('aria-label',`Projection sur douze mois. Facturé : ${money(result.revenue)}. Coûts : ${money(result.cost)}. Solde : ${money(result.net)}. Équilibre ${result.even?'au mois '+result.even:'non atteint sur la période'}.`)};
+if(chartSpring)chartSpring.stop();const initial=chartSpring?{...chartSpring.value}:values;chartSpring=new Spring(initial,render,{response:.4});if(animate)chartSpring.to(values);else chartSpring.snap(values)}
+function showTable(){if(!latestResult)return;let d=$('#numbers');if(!d){d=document.createElement('dialog');d.id='numbers';d.className='sheet';document.body.append(d)}const r=latestResult;d.innerHTML=`<div class="sheet-head"><div><span class="eyebrow">Détail de la simulation</span><h2>Douze mois, en chiffres.</h2></div><button class="icon-button" aria-label="Fermer les chiffres">×</button></div><p class="fine">Hypothèse d’encaissement dans le mois. Le tarif de rodage s’applique au forfait Orbit et à l’option IA.</p><table class="money-table"><thead><tr><th>Mois</th><th>Facturé</th><th>Coûts</th><th>Solde du mois</th><th>Cumulé</th></tr></thead><tbody>${r.rows.map(row=>`<tr><td>${row.m===0?'Initial':row.m}</td><td>${money(row.revenue)}</td><td>${money(row.cost)}</td><td>${money(row.net)}</td><td>${money(row.cumulative)}</td></tr>`).join('')}</tbody></table><p class="fine" style="margin-top:20px">Coûts totaux : ${money(r.cost)}. Solde avant taxes et frais commerciaux : ${money(r.net)}.</p>`;d.querySelector('button').onclick=()=>d.close();show('numbers')}
+updateCalc(false);go(Number(location.hash.slice(1))-1||0,true);
 })();

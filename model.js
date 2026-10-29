@@ -1,0 +1,6 @@
+/* Modèle de projection déterministe. Un mix IA est une moyenne attendue. */
+(function(root){
+const defaults={perMonth:2,price:500,iaPrice:200,iaShare:50,pilot:2,pilotRate:0,dev:500,setup:100,hosting:50,support:50,iaCost:20,months:12};
+function model(input={}){const p={...defaults,...input};for(const k of Object.keys(p)){p[k]=Number.isFinite(Number(p[k]))?Math.max(0,Number(p[k])):defaults[k]}p.months=Math.max(1,Math.min(120,Math.floor(p.months)));p.pilot=Math.min(p.months,Math.floor(p.pilot));p.iaShare=Math.min(100,p.iaShare);p.pilotRate=Math.min(1,p.pilotRate);let cumulative=-p.dev,adapted=0;const rows=[{m:0,revenue:0,cost:p.dev,net:-p.dev,cumulative}];for(let m=1;m<=p.months;m++){const n=p.perMonth,ai=n*p.iaShare/100,rate=m<=p.pilot?p.pilotRate:1,revenue=rate*(n*p.price+ai*p.iaPrice),included=Math.max(0,Math.min(n,1-adapted)),adaptation=(n-included)*p.setup,cost=p.hosting+p.support+ai*p.iaCost+adaptation;adapted+=n;cumulative+=revenue-cost;rows.push({m,revenue,cost,net:revenue-cost,cumulative,ai,n,rate})}const revenue=rows.reduce((a,r)=>a+r.revenue,0),cost=rows.reduce((a,r)=>a+r.cost,0),even=rows.find(r=>r.m>0&&r.cumulative>=0)?.m??null;return{rows,even,revenue,cost,net:cumulative,roi:cost?cumulative/cost*100:0,params:p}}
+root.OrbitModel={defaults,model};
+})(typeof window!=='undefined'?window:globalThis);
