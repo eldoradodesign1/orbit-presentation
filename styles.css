@@ -199,3 +199,9 @@ kbd { display: inline-block; min-width: 24px; padding: 1px 7px; border-radius: 7
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; } }
 @media print { html, body { overflow: visible; height: auto; } .controls, .progress, .notes, .overview, .brandbar { display: none !important; } .slide { position: relative; height: 100vh; opacity: 1; visibility: visible; transform: none; page-break-after: always; } .reveal > *, .spot { opacity: 1; transform: none; filter: none; } }
+
+/* QR code d'accès (slide « Se connecter ») */
+.qr { display: flex; align-items: center; gap: 18px; margin-top: 28px; padding: 14px 18px 14px 14px; border-radius: 22px; width: fit-content; background: rgb(var(--panel) / .55); border: 1px solid rgb(var(--line) / .14); backdrop-filter: blur(18px); }
+.qr img { width: 112px; height: 112px; padding: 9px; border-radius: 14px; background: #fff; }
+.qr span { display: grid; gap: 4px; font-size: 13px; color: rgb(var(--ink) / .55); }
+.qr b { font: 600 17px var(--display); color: rgb(var(--ink)); letter-spacing: -.01em; }

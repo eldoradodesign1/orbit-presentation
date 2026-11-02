@@ -25,7 +25,6 @@
 
 <header class="brandbar">
   <span class="brand"><img src="images/orbit.svg" alt="">Orbit</span>
-  <span class="btl" aria-label="BEYOND THE LINE Africa"><span class="btl-mark"><i></i><i></i><i></i></span><span class="btl-word"><b>BTL AFRICA</b><small>BEYOND THE LINE</small></span></span>
 </header>
 <div class="progress"><i></i></div>
 
@@ -201,6 +200,7 @@
       <span class="eyebrow">Étape 1</span>
       <h2>Se connecter</h2>
       <ol class="steps"><li><span><b>Vodacom</b> : lecture seule, un clic.</span></li><li><span><b>BTL</b> : choisir son profil, saisir son mot de passe.</span></li><li><span>Le tracker ouvre Orbit déjà connecté.</span></li></ol>
+      <div class="qr"><img src="images/qr-orbit.svg" alt="QR code vers Orbit"><span><b>Scannez pour ouvrir Orbit</b>eldoradodesign1.github.io/btl-deployment-report</span></div>
     </div>
     <div class="shot"><img src="images/app/01-connexion.jpg" alt="Écran de connexion d'Orbit"></div>
   </div>
@@ -347,8 +347,8 @@
     <span class="eyebrow">Le coût</span>
     <h2>Investi une fois.<br><span class="grad">Presque rien ensuite.</span></h2>
     <div class="tiles t3">
-      <div class="glass tile"><span class="tag">Développement complet</span><div class="num">500<small>$</small></div><p>Une fois. Déjà réalisé.</p></div>
-      <div class="glass tile"><span class="tag">Nouvelle campagne</span><div class="num">~100<small>$</small></div><p>Pour brancher un nouveau type.</p></div>
+      <div class="glass tile"><span class="tag">Développement complet</span><div class="num">500<small>$</small></div><p>Une fois. Déjà en cours de réalisation.</p></div>
+      <div class="glass tile"><span class="tag">Nouvelle campagne</span><div class="num">50<small>$</small></div><p>Pour brancher un nouveau type.</p></div>
       <div class="glass tile hl"><span class="tag">Hébergement</span><div class="num">&lt; 50<small>$ / mois</small></div><p>Base, site et IA compris.</p></div>
     </div>
   </div>
@@ -360,8 +360,8 @@
     <span class="eyebrow">Le modèle</span>
     <h2>Orbit devient<br><span class="grad">une ligne de facture.</span></h2>
     <div class="tiles t3">
-      <div class="glass tile"><span class="tag">Pilotage Orbit</span><div class="num">500<small>$ / campagne</small></div><p>Accès client, tableaux, rapports.</p></div>
-      <div class="glass tile hl"><span class="tag">Option IA</span><div class="num">+200<small>$ / campagne</small></div><p>Commentaires et questions.</p></div>
+      <div class="glass tile"><span class="tag">Pilotage Orbit</span><div class="num">400<small>$ / campagne</small></div><p>Accès client, tableaux, rapports.</p></div>
+      <div class="glass tile hl"><span class="tag">Option IA</span><div class="num">+100<small>$ / campagne</small></div><p>Commentaires et questions.</p></div>
       <div class="glass tile"><span class="tag">À la carte</span><div class="num">Quota</div><p>Questions par jour selon le contrat.</p></div>
     </div>
   </div>
@@ -381,10 +381,10 @@
     <div class="glass chart">
       <svg id="roi-chart" role="img" aria-label="Facturation mensuelle et solde cumulé sur 12 mois"></svg>
       <div class="legend"><span><i style="background:rgb(112 232 225)"></i>Facturé par mois</span><span><i style="background:rgb(160 140 255)"></i>Solde cumulé</span></div>
-      <p class="hyp">Hypothèses : 2 mois de rodage non facturés, puis 2 campagnes par mois, une sur deux avec l'IA. Coûts : 500 $ au départ, 100 $ par campagne, 50 $ par mois.</p>
+      <p class="hyp">Hypothèses : 2 mois de rodage non facturés, puis 2 campagnes par mois, une sur deux avec l'IA. Prix : 400 $ par campagne, +100 $ pour l'IA. Coûts : 500 $ au départ, 50 $ par nouvelle campagne, 50 $ par mois.</p>
     </div>
   </div>
-  <aside class="note"><b>3 min.</b> Les premiers mois sont négatifs (rodage, adhésion). Ensuite chaque campagne rapporte environ 400 $ net, 600 $ avec l'IA. Scénario volontairement prudent.</aside>
+  <aside class="note"><b>3 min.</b> Les premiers mois sont négatifs (rodage, adhésion). Ensuite chaque campagne rapporte environ 350 $ net, 450 $ avec l'IA. Scénario volontairement prudent.</aside>
 </section>
 
 <section class="slide" data-title="Calculateur">
@@ -396,7 +396,7 @@
         <label><span>Campagnes facturées par mois <b data-v="perMonth"></b></span><input type="range" name="perMonth" min="1" max="6" value="2"></label>
         <label><span>Mois de rodage non facturés <b data-v="pilot"></b></span><input type="range" name="pilot" min="0" max="6" value="2"></label>
         <label><span>Campagnes avec l'option IA <b data-v="iaShare"></b></span><input type="range" name="iaShare" min="0" max="100" step="10" value="50"></label>
-        <label><span>Prix Orbit par campagne <b data-v="price"></b></span><input type="range" name="price" min="200" max="1000" step="50" value="500"></label>
+        <label><span>Prix Orbit par campagne <b data-v="price"></b></span><input type="range" name="price" min="200" max="1000" step="50" value="400"></label>
       </div>
       <div class="glass out">
         <div class="kpis"><div class="kpi"><small>Point mort</small><b data-k="even"></b></div><div class="kpi"><small>Facturé sur 12 mois</small><b data-k="revenue"></b></div><div class="kpi"><small>Solde net</small><b data-k="total" class="grad"></b></div></div>
@@ -458,8 +458,7 @@
   <div class="reveal" style="text-align:center">
     <img class="endmark" src="images/orbit.svg" alt="Orbit">
     <h1>Merci.</h1>
-    <p class="lead" style="margin-inline:auto;max-width:40ch">Orbit · développé par Eldorado_design pour BEYOND THE LINE Africa.</p>
-    <p class="byeldo">By <b>Eldo</b></p>
+    <p class="byeldo">Orbit · Développé par <b>Eldo</b></p>
   </div>
   <aside class="note"><b>Questions et réponses.</b> Garder Orbit ouvert dans un autre onglet.</aside>
 </section>

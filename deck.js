@@ -49,7 +49,7 @@
 
   // ── Modèle économique (même calcul pour le graphique et le calculateur) ──
   // Mois 0 : développement. Pilote : on ne facture pas encore. Ensuite : n campagnes / mois facturées.
-  const model = ({ perMonth, pilot, iaShare, price = 500, ia = 200, setup = 100, hosting = 50, dev = 500, months = 12 }) => {
+  const model = ({ perMonth, pilot, iaShare, price = 400, ia = 100, setup = 50, hosting = 50, dev = 500, months = 12 }) => {
     let cum = -dev; const rows = [];
     for (let m = 1; m <= months; m++) {
       const billing = m > pilot;
