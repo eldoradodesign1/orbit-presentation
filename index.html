@@ -1,18 +1,480 @@
-<!doctype html><html lang="fr" data-ambiance="aurore"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Orbit · Une proposition par Eldo pour BTL Africa</title><meta name="description" content="24 scènes pour découvrir Orbit, prendre l’application en main et construire son adoption chez BEYOND THE LINE Africa."><meta name="theme-color" content="#090e1b"><link rel="icon" href="images/orbit.svg"><link rel="apple-touch-icon" href="images/orbit-180.png"><link rel="stylesheet" href="orbit-design-system/tokens.css"><link rel="stylesheet" href="orbit-design-system/materials.css"><link rel="stylesheet" href="styles.css"></head><body>
-<a class="skip" href="#deck">Aller à la présentation</a><div class="sky" aria-hidden="true"><div class="sky-wash"></div><div id="sky-ring"></div><div class="sky-stars"></div></div>
-<header class="topbar"><a class="wordmark" href="#1" aria-label="Orbit, début de la présentation"><img src="images/orbit.svg" alt=""><b>Orbit<span>Une proposition pour BTL Africa</span></b></a><nav id="acts" aria-label="Les six actes"></nav><button class="icon-button" data-action="appearance" aria-label="Ambiance et mouvement" title="Ambiance et mouvement"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16Z" fill="currentColor"/></svg></button></header>
-<main class="deck" id="deck" tabindex="-1" aria-label="Présentation Orbit"></main>
-<footer class="footer"><div class="btl" aria-label="BEYOND THE LINE Africa"><span class="btl-mark"><i></i><i></i><i></i></span><span><b>BTL AFRICA</b><small>BEYOND THE LINE</small></span></div><div class="act-caption"><span id="actlabel"></span><i></i><span>52 min</span></div><nav class="controls ods-glass" aria-label="Navigation de la présentation"><button class="icon-button" data-action="prev" aria-label="Slide précédente"><svg viewBox="0 0 24 24"><path d="m14 6-6 6 6 6"/></svg></button><button id="slide-counter" data-action="overview" aria-label="Ouvrir le sommaire">01 <span>/ 24</span></button><button class="icon-button" data-action="next" aria-label="Slide suivante"><svg viewBox="0 0 24 24"><path d="m10 6 6 6-6 6"/></svg></button><i class="divider"></i><button class="icon-button" data-action="overview" aria-label="Sommaire (O)" title="Sommaire · O"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1.5"/><rect x="14" y="4" width="6" height="6" rx="1.5"/><rect x="4" y="14" width="6" height="6" rx="1.5"/><rect x="14" y="14" width="6" height="6" rx="1.5"/></svg></button><button class="icon-button" data-action="presenter" aria-label="Ouvrir le mode présentateur (P)" title="Mode présentateur · P"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M12 16v5m-4 0h8M8 8h8m-8 4h4"/></svg></button><button class="icon-button" data-action="objections" aria-label="Questions et objections (Q)" title="Questions et objections · Q"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 4 2c-1 .7-1.5 1-1.5 2M12 17h.01"/></svg></button><button class="icon-button" data-action="full" aria-label="Plein écran (F)" title="Plein écran · F"><svg viewBox="0 0 24 24"><path d="M9 4H4v5m11-5h5v5M4 15v5h5m11-5v5h-5"/></svg></button></nav></footer><div class="progress" aria-hidden="true"><i></i></div><div class="sr-only" id="announcement" aria-live="polite"></div>
-<dialog id="overview" class="sheet"><div class="sheet-head"><div><span class="eyebrow">Le parcours</span><h2>Six actes. Une décision.</h2></div><button class="icon-button" data-close aria-label="Fermer le sommaire">×</button></div><div class="overview-list"></div><div class="sheet-foot"><span>24 écrans · 52 minutes · Questions ensuite</span><a href="orbit-design-system/" target="_blank" rel="noopener">Orbit Design System ↗</a></div></dialog>
-<dialog id="appearance" class="sheet compact"><div class="sheet-head"><div><span class="eyebrow">L’univers Orbit</span><h2>Une matière. Six ambiances.</h2></div><button class="icon-button" data-close aria-label="Fermer les ambiances">×</button></div><div class="theme-grid"></div><label class="motion-option"><span>Réduire les mouvements</span><input id="reduce-motion" type="checkbox" role="switch"></label><p class="fine">Réglages conservés sur cet appareil.</p><a class="text-link" href="orbit-design-system/" target="_blank" rel="noopener">Explorer le système visuel ↗</a></dialog>
-<dialog id="objections" class="sheet"><div class="sheet-head"><div><span class="eyebrow">En réserve pour les échanges</span><h2>Les bonnes questions.</h2></div><button class="icon-button" data-close aria-label="Fermer les objections">×</button></div><div class="faq">
-<details><summary>« Encore un outil ? »</summary><p>Orbit doit réduire la compilation et les versions parallèles. Le pilote mesure le temps de préparation d’un rapport et les corrections. L’adoption se justifie par ces résultats.</p></details>
-<details><summary>« Et la fiabilité des données ? »</summary><p>Une source commune réduit la ressaisie. Le terrain reste responsable de la collecte et un référent contrôle les anomalies, la période et les totaux avant diffusion.</p></details>
-<details><summary>« Qui peut voir nos données ? »</summary><p>Le périmètre dépend des accès accordés. Avant une offre client, BTL doit réceptionner l’authentification, l’isolement des campagnes et les contrôles côté serveur.</p></details>
-<details><summary>« Et si la connexion tombe ? »</summary><p>Les vues distantes dépendent du réseau. Une procédure de collecte temporaire et de reprise doit être prévue. Le mode hors ligne complet reste à valider.</p></details>
-<details><summary>« Peut-on se fier à l’IA ? »</summary><p>L’IA aide à analyser et à rédiger. Le responsable vérifie les chiffres et les pistes avec le terrain. Elle ne prouve pas une cause et ne remplace pas la décision humaine.</p></details>
-<details><summary>« Le client paiera vraiment ? »</summary><p>Les 500 $ et l’option IA à 200 $ sont des tarifs proposés. Le pilote commercial doit vérifier la valeur perçue et l’accord du client, avec une durée, des livrables et un quota clairs.</p></details>
-<details><summary>« Et quand Eldo n’est pas là ? »</summary><p>La réception doit inclure documentation, code accessible à BTL, relais formé, sauvegardes et responsabilité de maintenance définie.</p></details></div></dialog>
-<dialog id="advanced" class="sheet compact"><div class="sheet-head"><div><span class="eyebrow">Simulation</span><h2>Les coûts comptent aussi.</h2></div><button class="icon-button" data-close aria-label="Fermer les coûts">×</button></div><div class="advanced-fields"></div><p class="fine">Coûts de travail à confirmer. Première campagne incluse dans le développement. Les adaptations suivantes coûtent le montant saisi, même pendant le rodage.</p></dialog>
-<dialog id="zoom" class="image-dialog"><button class="icon-button" data-close aria-label="Fermer la capture">×</button><img alt="Capture réelle d’Orbit agrandie"><p>Capture réelle d’Orbit · 29 octobre 2026</p></dialog>
-<div id="toast" role="status"></div><script src="orbit-design-system/motion.js"></script><script src="slides.js"></script><script src="model.js"></script><script src="render.js"></script><script src="deck.js"></script></body></html>
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Orbit · Keynote BTL</title>
+<meta name="description" content="Orbit, le pilotage des campagnes de BEYOND THE LINE Africa : pourquoi l'adopter, comment s'en servir, ce que ça coûte et ce que ça rapporte.">
+<meta name="theme-color" content="#030712">
+<link rel="icon" href="images/orbit.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="images/orbit-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"/></symbol>
+  <symbol id="i-note" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 4h14v16H5z"/><path d="M9 9h6M9 13h6M9 17h3"/></symbol>
+  <symbol id="i-full" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></symbol>
+</svg>
+
+<header class="brandbar">
+  <span class="brand"><img src="images/orbit.svg" alt="">Orbit</span>
+</header>
+<div class="progress"><i></i></div>
+
+<main class="deck">
+
+<!-- ═════════ I · POURQUOI ═════════ -->
+<section class="slide full" data-title="Orbit" data-part="Pourquoi">
+  <div class="photo"><img src="images/photos/reunion.jpg" alt="Une équipe pilote une campagne sur l'écran géant de la salle de réunion"></div>
+  <div class="reveal">
+    <span class="eyebrow">BEYOND THE LINE Africa</span>
+    <h1>Orbit.</h1>
+    <p class="lead">Chaque campagne, en temps réel. Pour toute l'agence.</p>
+  </div>
+  <aside class="note"><b>1 min.</b> Ouvrir sur l'image : une réunion où tout le monde regarde la même campagne, en direct. Annoncer les quatre temps : pourquoi, ce qu'Orbit apporte, comment s'en servir, ce que ça rapporte.</aside>
+</section>
+
+<section class="slide full" data-title="Aujourd'hui">
+  <div class="photo left"><img src="images/photos/constat.jpg" alt="Une superviseure débordée par les fichiers et les messages"></div>
+  <div class="reveal">
+    <span class="eyebrow">Aujourd'hui</span>
+    <h2>Un rapport,<br>c'est une soirée<br><span class="grad">de recopie.</span></h2>
+    <p class="lead">WhatsApp, photos, Excel, notes. Et des chiffres qui changent après envoi.</p>
+  </div>
+  <aside class="note"><b>2 min.</b> Faire réagir la salle : combien d'heures pour le rapport hebdo ? Combien de corrections après envoi au client ? Ce sont nos meilleurs arguments. Le problème, c'est le processus, pas les personnes.</aside>
+</section>
+
+<section class="slide full" data-title="10 h, au kiosque">
+  <div class="photo left flip"><img src="images/photos/ambassadeur.jpg" alt="Un ambassadeur saisit une vente sur son téléphone devant un kiosque M-Pesa à Kinshasa"></div>
+  <div class="reveal">
+    <span class="eyebrow">Avec Orbit</span>
+    <h2>10 h, une vente au kiosque.<br><span class="grad">10 h 01, toute l'agence la voit.</span></h2>
+    <p class="lead">Saisie sur le téléphone. Plus rien à recompiler le soir.</p>
+  </div>
+  <aside class="note"><b>1 min.</b> Le contraste avec la slide précédente : l'ambassadeur saisit au kiosque, la direction, les superviseurs et le chargé de compte voient le chiffre dans la minute. La réunion du lundi sert à décider, plus à vérifier.</aside>
+</section>
+
+<section class="slide" data-title="Orbit en une phrase">
+  <div class="split">
+    <div class="reveal">
+      <span class="eyebrow">En une phrase</span>
+      <h2>Le terrain saisit.<br><span class="grad">Orbit fait le reste.</span></h2>
+      <p class="lead">Calculs, classements, commentaires, rapports. Rien à ressaisir.</p>
+    </div>
+    <div class="shot float"><img src="images/app/02-accueil-privilege.jpg" alt="Accueil d'Orbit sur la campagne Vodacom Privilège"></div>
+  </div>
+  <aside class="note"><b>2 min.</b> Orbit est déjà en service sur quatre campagnes Vodacom : Privilège, Merchant, M-Pesa Mikili et Youth F2F. Ce n'est pas un projet, c'est un outil qui tourne.</aside>
+</section>
+
+<!-- ═════════ II · CE QU'ORBIT APPORTE ═════════ -->
+<section class="slide full" data-title="Pratique" data-part="Ce qu'Orbit apporte">
+  <div class="photo left"><img src="images/photos/hotesse.jpg" alt="Une hôtesse montre Orbit sur son téléphone en boutique"></div>
+  <div class="reveal">
+    <span class="eyebrow">01 · Pratique</span>
+    <h2>Un lien.<br><span class="grad">Partout.</span></h2>
+    <p class="lead">Téléphone, ordinateur, écran de salle. Rien à installer, s'installe en un geste.</p>
+  </div>
+  <aside class="note"><b>2 min.</b> Pas de licence ni d'installation sur les postes. Faire ouvrir le lien sur un téléphone de la salle.</aside>
+</section>
+
+<section class="slide" data-title="Modulable">
+  <div class="reveal">
+    <span class="eyebrow">02 · Modulable</span>
+    <h2>Chaque campagne a<br><span class="grad">son Orbit.</span></h2>
+    <div class="gallery">
+      <figure><img src="images/app/08-accueil-merchant.jpg" alt="Campagne Merchant"><figcaption>Merchant · POS et transactions</figcaption></figure>
+      <figure><img src="images/app/09-mikili-nebuleuse.jpg" alt="Campagne M-Pesa Mikili"><figcaption>M-Pesa Mikili · contacts</figcaption></figure>
+      <figure><img src="images/app/10-starfly.jpg" alt="Ambiance claire"><figcaption>Six ambiances, claires ou sombres</figcaption></figure>
+    </div>
+  </div>
+  <aside class="note"><b>2 min.</b> Hôtesses, ambassadeurs, contacts, POS : chaque type a son vocabulaire et ses objectifs. Une nouvelle campagne se branche pour environ 100 $.</aside>
+</section>
+
+<section class="slide" data-title="Fiable et claire">
+  <div class="split rev">
+    <div class="shot float"><img src="images/app/05-terrain.jpg" alt="Vue Terrain avec la fiche d'une hôtesse"></div>
+    <div class="reveal">
+      <span class="eyebrow">03 · Fiable et claire</span>
+      <h2>Une source.<br><span class="grad">Zéro version.</span></h2>
+      <p class="lead">Une base unique et sécurisée. Chaque correction est tracée.</p>
+    </div>
+  </div>
+  <aside class="note"><b>2 min.</b> Profils et droits séparés : Vodacom lit, BTL pilote. Le journal des modifications garde qui a changé quoi, et quand.</aside>
+</section>
+
+<section class="slide" data-title="Sans erreurs">
+  <div class="reveal">
+    <span class="eyebrow">04 · Sans erreurs</span>
+    <h2>Le chiffre se calcule.<br><span class="grad">Il ne se recopie plus.</span></h2>
+    <div class="versus">
+      <div class="glass col before"><h3>Avant</h3><ul><li>Recopies WhatsApp → Excel</li><li>Doublons, oublis, formules cassées</li><li>Corrections après envoi</li></ul></div>
+      <div class="glass col after"><h3 class="grad">Avec Orbit</h3><ul><li>Saisie unique, sur le moment</li><li>Totaux et objectifs automatiques</li><li>Anomalies signalées avant envoi</li></ul></div>
+    </div>
+  </div>
+  <aside class="note"><b>2 min.</b> La recopie est la principale source d'erreurs. Orbit la supprime.</aside>
+</section>
+
+<section class="slide full" data-title="Rapports en 30 secondes">
+  <div class="photo left"><img src="images/photos/export.jpg" alt="Une superviseure exporte le rapport de la campagne"></div>
+  <div class="reveal">
+    <span class="eyebrow">05 · Rapports</span>
+    <h2>Le rapport client<br><span class="grad">en 30 secondes.</span></h2>
+    <p class="lead">PDF prêt à envoyer. Excel avec formules et données brutes, vérifiable.</p>
+  </div>
+  <aside class="note"><b>2 min.</b> Comparer avec le temps de compilation donné par la salle au début. L'Excel à formules permet au client de recompter : c'est de la transparence.</aside>
+</section>
+
+<section class="slide" data-title="Décisionnelle">
+  <div class="split">
+    <div class="reveal">
+      <span class="eyebrow">06 · Décisionnelle</span>
+      <h2>On pose la question.<br><span class="grad">Orbit répond, chiffres à l'appui.</span></h2>
+    </div>
+    <div class="glass chat">
+      <div class="head"><i>✦</i>Questionner la campagne</div>
+      <div class="q">Qui sont les trois meilleurs et pourquoi ?</div>
+      <div class="a"><p>• Becky O. : 211 transactions en 10 jours<br>• Patience T. : 141 en 12 jours<br>• Jesly B. : 113 en 12 jours</p><p>Les notes de terrain signalent des lenteurs de connexion et des fonds livrés en retard.</p><p><b>Suggestion :</b> approvisionner les fonds dès le matin.</p></div>
+      <div class="foot"><span>Réponse réelle · Merchant</span><span>19 questions restantes aujourd'hui</span></div>
+    </div>
+  </div>
+  <aside class="note"><b>3 min.</b> Vraie réponse obtenue sur Merchant. L'IA lit les chiffres et les notes de clôture, puis propose des pistes. Aucune donnée client ne lui est transmise. Le quota quotidien rend le service facturable.</aside>
+</section>
+
+<section class="slide full" data-title="Réorienter">
+  <div class="photo left"><img src="images/photos/superviseur-terrain.jpg" alt="Un superviseur consulte Orbit dans la rue"></div>
+  <div class="reveal">
+    <span class="eyebrow">07 · Agile</span>
+    <h2>Jeudi, un shop décroche.<br><span class="grad">Vendredi, c'est corrigé.</span></h2>
+    <p class="lead">On déplace les équipes avant la fin de la semaine, pas après.</p>
+  </div>
+  <aside class="note"><b>2 min.</b> Un shop sous la moyenne deux jours de suite se voit dans Terrain. On déplace deux hôtesses. Sans Orbit, on le découvre dans le rapport de fin de semaine.</aside>
+</section>
+
+<section class="slide full" data-title="Présenter les résultats">
+  <div class="photo"><img src="images/photos/directeur.jpg" alt="Un directeur présente la courbe de progression"></div>
+  <div class="reveal">
+    <span class="eyebrow">08 · Convaincant</span>
+    <h2>Les résultats<br><span class="grad">se montrent en direct.</span></h2>
+  </div>
+  <aside class="note"><b>2 min.</b> La courbe de progression, les jours prestés, les classements : la présentation au client se fait directement dans Orbit, sans préparer de diapositives.</aside>
+</section>
+
+<section class="slide" data-title="Ce que voit le client">
+  <div class="split even">
+    <div class="reveal">
+      <span class="eyebrow">09 · Maîtrise</span>
+      <h2>Le client voit<br><span class="grad">ce que nous décidons.</span></h2>
+      <p class="lead">Par campagne : l'accès, les objectifs, les questions à l'IA.</p>
+    </div>
+    <div class="glass access">
+      <div class="row"><span>Campagne</span><span>Voir</span><span>Objectifs</span><span>IA</span></div>
+      <div class="row"><b>Vodacom Privilège</b><i class="sw on"></i><i class="sw on"></i><i class="sw on"></i></div>
+      <div class="row"><b>Merchant Educational</b><i class="sw on"></i><i class="sw"></i><i class="sw on"></i></div>
+      <div class="row"><b>M-Pesa Mikili</b><i class="sw on"></i><i class="sw on"></i><i class="sw"></i></div>
+      <div class="row"><b>Youth F2F</b><i class="sw"></i><i class="sw"></i><i class="sw"></i></div>
+    </div>
+  </div>
+  <aside class="note"><b>2 min.</b> Levier de négociation : on montre la campagne sans les objectifs internes, et l'IA est réservée aux clients qui la paient.</aside>
+</section>
+
+<!-- ═════════ III · TUTORIEL ═════════ -->
+<section class="slide full chapter" data-title="Prise en main" data-part="Prise en main">
+  <div class="photo left"><img src="images/photos/formation.jpg" alt="Séance de formation des agents à Orbit"></div>
+  <div class="reveal">
+    <div class="num-big">12 min</div>
+    <h2>Prise en main.<br><span class="grad">Tout est déjà disponible.</span></h2>
+  </div>
+  <aside class="note"><b>1 min.</b> Annoncer : on parcourt l'appli écran par écran. Tout ce qui suit est en service aujourd'hui. Idéalement, faire la démonstration en direct en parallèle.</aside>
+</section>
+
+<section class="slide" data-title="Se connecter">
+  <div class="split">
+    <div class="reveal">
+      <span class="eyebrow">Étape 1</span>
+      <h2>Se connecter</h2>
+      <ol class="steps"><li><span><b>Vodacom</b> : lecture seule, un clic.</span></li><li><span><b>BTL</b> : choisir son profil, saisir son mot de passe.</span></li><li><span>Le tracker ouvre Orbit déjà connecté.</span></li></ol>
+      <div class="qr"><img src="images/qr-orbit.svg" alt="QR code vers Orbit"><span><b>Scannez pour ouvrir Orbit</b>eldoradodesign1.github.io/btl-deployment-report</span></div>
+    </div>
+    <div class="shot"><img src="images/app/01-connexion.jpg" alt="Écran de connexion d'Orbit"></div>
+  </div>
+  <aside class="note"><b>1 min.</b> Deux profils : Vodacom pour le client (lecture), BTL pour l'équipe (pilotage). Les droits suivent le rôle : agent, superviseur, admin, super admin.</aside>
+</section>
+
+<section class="slide" data-title="Choisir la campagne">
+  <div class="split">
+    <div class="reveal">
+      <span class="eyebrow">Étape 2</span>
+      <h2>Choisir la campagne</h2>
+      <ol class="steps"><li><span>Touche <kbd>C</kbd>, ou le bouton en haut à gauche.</span></li><li><span>Taper quelques lettres pour filtrer.</span></li><li><span><kbd>Entrée</kbd> pour ouvrir.</span></li></ol>
+    </div>
+    <div class="shot"><img src="images/app/07-palette-campagnes.jpg" alt="Palette de choix de campagne"></div>
+  </div>
+  <aside class="note"><b>1 min.</b> La palette est pensée pour un catalogue qui grandit : avec 20 campagnes, on retrouve la bonne en deux secondes.</aside>
+</section>
+
+<section class="slide" data-title="L'accueil">
+  <div class="split rev">
+    <div class="shot">
+      <img src="images/app/02-accueil-privilege.jpg" alt="Accueil d'Orbit annoté">
+      <span class="spot" style="left:9.6%;top:12.5%">1</span>
+      <span class="spot" style="left:63%;top:4.2%">2</span>
+      <span class="spot" style="left:27%;top:21%">3</span>
+      <span class="spot" style="left:34%;top:52%">4</span>
+      <span class="spot" style="left:84%;top:52%">5</span>
+      <span class="spot" style="left:88.4%;top:4.2%">6</span>
+    </div>
+    <div class="reveal">
+      <span class="eyebrow">Étape 3</span>
+      <h2>L'accueil</h2>
+      <ol class="steps"><li><span>La campagne</span></li><li><span>La période, un clic</span></li><li><span>Le chiffre clé et l'objectif</span></li><li><span>La progression jour par jour</span></li><li><span>Le commentaire de la période</span></li><li><span>L'export</span></li></ol>
+    </div>
+  </div>
+  <aside class="note"><b>2 min.</b> Tout l'essentiel tient sur un écran. La période se choisit dans un calendrier ; <kbd>Alt+1 à 9</kbd> sélectionne une semaine, <kbd>Alt+0</kbd> toute la campagne.</aside>
+</section>
+
+<section class="slide" data-title="Activité">
+  <div class="split">
+    <div class="reveal">
+      <span class="eyebrow">Étape 4</span>
+      <h2>Activité</h2>
+      <p class="lead">Le rythme de la campagne, jour par jour, agent par agent.</p>
+      <p class="why"><b>Pourquoi :</b> repérer un jour faible ou un agent absent en un coup d'œil.</p>
+    </div>
+    <div class="shot"><img src="images/app/04-activite.jpg" alt="Vue Activité"></div>
+  </div>
+  <aside class="note"><b>1 min.</b> La carte de chaleur montre les jours forts et faibles. À droite, le détail du jour sélectionné avec la note de supervision.</aside>
+</section>
+
+<section class="slide" data-title="Terrain">
+  <div class="split">
+    <div class="reveal">
+      <span class="eyebrow">Étape 5</span>
+      <h2>Terrain</h2>
+      <p class="lead">Agents et shops classés. Une fiche par personne.</p>
+      <p class="why"><b>Pourquoi :</b> savoir qui performe et où renforcer.</p>
+    </div>
+    <div class="shot"><img src="images/app/05-terrain.jpg" alt="Vue Terrain"></div>
+  </div>
+  <aside class="note"><b>1 min.</b> Cliquer sur un agent ouvre sa fiche : volume, jours prestés, répartition. Même logique pour les shops ou les lieux.</aside>
+</section>
+
+<section class="slide" data-title="Données">
+  <div class="split">
+    <div class="reveal">
+      <span class="eyebrow">Étape 6</span>
+      <h2>Données</h2>
+      <ol class="steps"><li><span><b>Journal</b> : chaque ligne, filtrable.</span></li><li><span><b>Performances</b> : présence et volumes par jour.</span></li><li><span><b>Qualité</b> : anomalies à corriger.</span></li></ol>
+    </div>
+    <div class="shot"><img src="images/app/t-performances.jpg" alt="Performances et présence"></div>
+  </div>
+  <aside class="note"><b>2 min.</b> Les numéros clients sont masqués. Les superviseurs BTL peuvent corriger une ligne ; chaque correction est journalisée.</aside>
+</section>
+
+<section class="slide" data-title="Exporter">
+  <div class="split">
+    <div class="reveal">
+      <span class="eyebrow">Étape 7</span>
+      <h2>Exporter</h2>
+      <ol class="steps"><li><span>Bouton <b>Export</b>, en haut à droite.</span></li><li><span>Choisir PDF ou Excel, cocher les sections.</span></li><li><span>Télécharger. C'est prêt.</span></li></ol>
+    </div>
+    <div class="shot"><img src="images/app/06-export.jpg" alt="Fenêtre d'export avec aperçu"></div>
+  </div>
+  <aside class="note"><b>1 min.</b> L'aperçu montre le rapport tel qu'il sera envoyé. L'Excel contient des formules et un onglet de données brutes.</aside>
+</section>
+
+<section class="slide" data-title="Questionner">
+  <div class="split">
+    <div class="reveal">
+      <span class="eyebrow">Étape 8</span>
+      <h2>Questionner</h2>
+      <ol class="steps"><li><span>Bouton <b>Questionner</b>, sur le commentaire de la période.</span></li><li><span>Une suggestion, ou sa propre question.</span></li><li><span>Le compteur affiche les questions restantes.</span></li></ol>
+    </div>
+    <div class="shot"><img src="images/app/t-questionner.jpg" alt="Panneau Questionner la campagne"></div>
+  </div>
+  <aside class="note"><b>1 min.</b> La conversation porte sur la campagne et la période affichées. Le quota est réglé par le super admin.</aside>
+</section>
+
+<section class="slide" data-title="Mobile et apparence">
+  <div class="split">
+    <div class="reveal">
+      <span class="eyebrow">Étape 9</span>
+      <h2>À son goût,<br><span class="grad">dans la poche.</span></h2>
+      <ol class="steps"><li><span><b>Apparence</b> : six ambiances, opacité, flou.</span></li><li><span><b>Installer</b> : ajouter à l'écran d'accueil.</span></li><li><span>Sur téléphone, tout passe par le dock du bas.</span></li></ol>
+    </div>
+    <div style="display:flex;gap:22px;align-items:center"><div class="shot" style="flex:1"><img src="images/app/t-apparence.jpg" alt="Réglages d'apparence"></div><div class="phone"><img src="images/app/12-mobile-accueil.jpg" alt="Orbit sur téléphone"></div></div>
+  </div>
+  <aside class="note"><b>1 min.</b> L'appli s'installe comme une appli native, avec sa propre icône. Chaque utilisateur garde ses réglages.</aside>
+</section>
+
+<section class="slide" data-title="Administration">
+  <div class="split">
+    <div class="reveal">
+      <span class="eyebrow">Étape 10 · Admin BTL</span>
+      <h2>Accès client<br>et paramètres</h2>
+      <ol class="steps"><li><span><b>Accès client</b> : trois interrupteurs par campagne.</span></li><li><span><b>Paramètres</b> : objectifs, profil, quota de questions.</span></li><li><span><b>Journal</b> : toutes les modifications, datées.</span></li></ol>
+    </div>
+    <div class="shot" id="admin-shot"><img src="images/app/t-acces-client.jpg" alt="Écran Accès client" onerror="this.closest('.slide').querySelector('.glass.access-fallback').hidden=false;this.parentElement.hidden=true"></div>
+    <div class="glass access access-fallback" hidden>
+      <div class="row"><span>Campagne</span><span>Voir</span><span>Objectifs</span><span>IA</span></div>
+      <div class="row"><b>Vodacom Privilège</b><i class="sw on"></i><i class="sw on"></i><i class="sw on"></i></div>
+      <div class="row"><b>Merchant Educational</b><i class="sw on"></i><i class="sw"></i><i class="sw on"></i></div>
+      <div class="row"><b>M-Pesa Mikili</b><i class="sw on"></i><i class="sw on"></i><i class="sw"></i></div>
+    </div>
+  </div>
+  <aside class="note"><b>1 min.</b> Réservé aux admin et super admin BTL. Chaque changement s'applique immédiatement côté client.</aside>
+</section>
+
+<!-- ═════════ IV · ÉCONOMIE ═════════ -->
+<section class="slide full" data-title="La condition" data-part="Ce que ça demande, ce que ça rapporte">
+  <div class="photo"><img src="images/photos/equipe.jpg" alt="L'équipe BTL réunie"></div>
+  <div class="reveal">
+    <span class="eyebrow">La condition</span>
+    <h2>Orbit ne vaut que si<br><span class="grad">tout le monde l'utilise.</span></h2>
+    <p class="lead">Un agent qui ne saisit pas, c'est un chiffre faux pour toute la campagne.</p>
+  </div>
+  <aside class="note"><b>3 min.</b> À dire franchement : si une partie de l'agence reste sur Excel, on revient aux deux versions des chiffres. Agents : saisie le jour même. Superviseurs : contrôle quotidien. Chargés de compte : rapports exclusivement depuis Orbit. Direction : réunions sur Orbit. Laisser place aux objections.</aside>
+</section>
+
+<section class="slide" data-title="Le coût">
+  <div class="reveal">
+    <span class="eyebrow">Le coût</span>
+    <h2>Investi une fois.<br><span class="grad">Presque rien ensuite.</span></h2>
+    <div class="tiles t3">
+      <div class="glass tile"><span class="tag">Développement complet</span><div class="num">500<small>$</small></div><p>Une fois. Déjà en cours de réalisation.</p></div>
+      <div class="glass tile"><span class="tag">Nouvelle campagne</span><div class="num">50<small>$</small></div><p>Pour brancher un nouveau type.</p></div>
+      <div class="glass tile hl"><span class="tag">Hébergement</span><div class="num">&lt; 50<small>$ / mois</small></div><p>Base, site et IA compris.</p></div>
+    </div>
+  </div>
+  <aside class="note"><b>2 min.</b> Le développement est déjà payé et l'outil tourne. Le récurrent, c'est l'hébergement, négociable. À comparer avec le coût des heures de compilation actuelles.</aside>
+</section>
+
+<section class="slide" data-title="La facturation">
+  <div class="reveal">
+    <span class="eyebrow">Le modèle</span>
+    <h2>Orbit devient<br><span class="grad">une ligne de facture.</span></h2>
+    <div class="tiles t3">
+      <div class="glass tile"><span class="tag">Pilotage Orbit</span><div class="num">400<small>$ / campagne</small></div><p>Accès client, tableaux, rapports.</p></div>
+      <div class="glass tile hl"><span class="tag">Option IA</span><div class="num">+100<small>$ / campagne</small></div><p>Commentaires et questions.</p></div>
+      <div class="glass tile"><span class="tag">À la carte</span><div class="num">Quota</div><p>Questions par jour selon le contrat.</p></div>
+    </div>
+  </div>
+  <aside class="note"><b>3 min.</b> Intégrer Orbit à chaque devis, de façon permanente. Le client paie un service visible, pas un logiciel. Montants indicatifs, à discuter.</aside>
+</section>
+
+<section class="slide" data-title="Retour sur investissement">
+  <div class="split">
+    <div class="reveal">
+      <span class="eyebrow">Retour sur investissement</span>
+      <h2>Lent au départ.<br><span class="grad">Net ensuite.</span></h2>
+      <div class="tiles t2">
+        <div class="glass tile"><span class="tag">Point mort</span><div class="num" id="roi-even" style="font-size:44px">—</div></div>
+        <div class="glass tile"><span class="tag">Solde à 12 mois</span><div class="num grad" id="roi-total" style="font-size:44px">—</div></div>
+      </div>
+    </div>
+    <div class="glass chart">
+      <svg id="roi-chart" role="img" aria-label="Facturation mensuelle et solde cumulé sur 12 mois"></svg>
+      <div class="legend"><span><i style="background:rgb(112 232 225)"></i>Facturé par mois</span><span><i style="background:rgb(160 140 255)"></i>Solde cumulé</span></div>
+      <p class="hyp">Hypothèses : 2 mois de rodage non facturés, puis 2 campagnes par mois, une sur deux avec l'IA. Prix : 400 $ par campagne, +100 $ pour l'IA. Coûts : 500 $ au départ, 50 $ par nouvelle campagne, 50 $ par mois.</p>
+    </div>
+  </div>
+  <aside class="note"><b>3 min.</b> Les premiers mois sont négatifs (rodage, adhésion). Ensuite chaque campagne rapporte environ 350 $ net, 450 $ avec l'IA. Scénario volontairement prudent.</aside>
+</section>
+
+<section class="slide" data-title="Calculateur">
+  <div class="reveal">
+    <span class="eyebrow">À vous</span>
+    <h2>Testons <span class="grad">vos hypothèses.</span></h2>
+    <div class="calc" id="calc">
+      <div class="glass inputs">
+        <label><span>Campagnes facturées par mois <b data-v="perMonth"></b></span><input type="range" name="perMonth" min="1" max="6" value="2"></label>
+        <label><span>Mois de rodage non facturés <b data-v="pilot"></b></span><input type="range" name="pilot" min="0" max="6" value="2"></label>
+        <label><span>Campagnes avec l'option IA <b data-v="iaShare"></b></span><input type="range" name="iaShare" min="0" max="100" step="10" value="50"></label>
+        <label><span>Prix Orbit par campagne <b data-v="price"></b></span><input type="range" name="price" min="200" max="1000" step="50" value="400"></label>
+      </div>
+      <div class="glass out">
+        <div class="kpis"><div class="kpi"><small>Point mort</small><b data-k="even"></b></div><div class="kpi"><small>Facturé sur 12 mois</small><b data-k="revenue"></b></div><div class="kpi"><small>Solde net</small><b data-k="total" class="grad"></b></div></div>
+        <svg role="img" aria-label="Simulation sur 12 mois"></svg>
+      </div>
+    </div>
+  </div>
+  <aside class="note"><b>3 min.</b> Laisser la salle proposer les chiffres. Même avec une campagne par mois et un long rodage, le point mort arrive dans l'année.</aside>
+</section>
+
+<section class="slide full" data-title="Le client">
+  <div class="photo left"><img src="images/photos/client.jpg" alt="Une chargée de compte présente Orbit à des clients"></div>
+  <div class="reveal">
+    <span class="eyebrow">La valeur</span>
+    <h2>Le client voit sa campagne.<br><span class="grad">Il nous choisit.</span></h2>
+    <p class="lead">Transparence, réactivité, chiffres vérifiables : ce que nos concurrents ne montrent pas.</p>
+  </div>
+  <aside class="note"><b>2 min.</b> Ce que chacun gagne : la direction, une vision en direct et un revenu ; les superviseurs, du temps ; les agents, un travail visible ; le client, la confiance.</aside>
+</section>
+
+<section class="slide" data-title="Plan d'adoption">
+  <div class="reveal plan">
+    <span class="eyebrow">Le plan</span>
+    <h2>90 jours pour en faire<br><span class="grad">un réflexe.</span></h2>
+    <div class="tiles t3">
+      <div class="glass tile"><em>Jours 1 à 30</em><h3>Adopter</h3><ul><li>Prise en main par équipe</li><li>Toutes les campagnes sur Orbit</li><li>Fin des rapports Excel internes</li></ul></div>
+      <div class="glass tile"><em>Jours 31 à 60</em><h3>Montrer</h3><ul><li>Accès client sur une campagne</li><li>Réunions sur écran</li><li>Ajustements</li></ul></div>
+      <div class="glass tile"><em>Jours 61 à 90</em><h3>Facturer</h3><ul><li>Orbit dans les devis</li><li>Option IA proposée</li><li>Bilan chiffré</li></ul></div>
+    </div>
+  </div>
+  <aside class="note"><b>2 min.</b> Un référent par équipe. Le bilan à 90 jours mesure le taux de saisie, le temps de production des rapports et les campagnes facturées avec Orbit.</aside>
+</section>
+
+<section class="slide" data-title="Vos questions">
+  <div class="reveal faq">
+    <span class="eyebrow">Anticiper</span>
+    <h2>Les questions <span class="grad">qu'on va nous poser.</span></h2>
+    <div class="tiles t2">
+      <div class="glass tile"><b>Et si le réseau coupe ?</b><span>La saisie part dès que la connexion revient.</span></div>
+      <div class="glass tile"><b>Les données sont protégées ?</b><span>Droits par profil ; l'IA ne voit ni nom ni numéro client.</span></div>
+      <div class="glass tile"><b>Et si le client ne paie pas ?</b><span>Orbit reste notre outil : le temps gagné le justifie.</span></div>
+      <div class="glass tile"><b>Qui maintient l'outil ?</b><span>Eldorado_design, coût connu d'avance.</span></div>
+    </div>
+  </div>
+  <aside class="note"><b>2 min.</b> Traiter les objections avant qu'elles ne viennent.</aside>
+</section>
+
+<section class="slide full" data-title="La décision">
+  <div class="photo"><img src="images/photos/decision.jpg" alt="Poignée de main autour de la table"></div>
+  <div class="reveal">
+    <span class="eyebrow">Aujourd'hui</span>
+    <h2>Une décision :<br><span class="grad">Orbit, pour toute l'agence.</span></h2>
+    <p class="lead">Adhésion de toutes les équipes. Un référent par équipe. Orbit dans les devis.</p>
+  </div>
+  <aside class="note"><b>2 min.</b> Conclure par la demande, pas par un résumé. Fixer la date du bilan à 90 jours.</aside>
+</section>
+
+<section class="slide" data-title="Merci">
+  <div class="reveal" style="text-align:center">
+    <img class="endmark" src="images/orbit.svg" alt="Orbit">
+    <h1>Merci.</h1>
+    <p class="byeldo">Orbit · Développé par <b>Eldo</b></p>
+  </div>
+  <aside class="note"><b>Questions et réponses.</b> Garder Orbit ouvert dans un autre onglet.</aside>
+</section>
+
+</main>
+
+<div class="notes" role="note" aria-live="polite"></div>
+<div class="overview" role="dialog" aria-label="Sommaire"><h2>Sommaire</h2><ol></ol></div>
+<nav class="controls" aria-label="Navigation">
+  <button type="button" data-act="prev" aria-label="Précédente"><svg><use href="#i-left"/></svg></button>
+  <span class="count" data-count></span>
+  <button type="button" data-act="next" aria-label="Suivante"><svg><use href="#i-right"/></svg></button>
+  <button type="button" data-act="overview" aria-label="Sommaire (O)"><svg><use href="#i-grid"/></svg></button>
+  <button type="button" data-act="notes" aria-label="Notes de l'orateur (N)"><svg><use href="#i-note"/></svg></button>
+  <button type="button" data-act="full" aria-label="Plein écran (F)"><svg><use href="#i-full"/></svg></button>
+</nav>
+<script src="deck.js"></script>
+</body>
+</html>
